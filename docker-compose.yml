@@ -1,27 +1,33 @@
 version: '3.8'
 
 services:
+  web:
+    build: .
+    container_name: likhit_web
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      - FLASK_ENV=development
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - MYSQL_USER=likhit
+      - MYSQL_PASSWORD=likhit123
+      - MYSQL_DB=likhit_db
+
   db:
     image: mysql:8.0
+    container_name: likhit_db
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: likhitdb
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: mypassword
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: likhit_db
+      MYSQL_USER: likhit
+      MYSQL_PASSWORD: likhit123
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
-
-  app:
-    build:
-      context: .
-      dockerfile: .devcontainer/Dockerfile
-    volumes:
-      - .:/workspace/Likhit
-    command: sleep infinity
-    depends_on:
-      - db
+      - db_data:/var/lib/mysql
 
 volumes:
-  mysql_data:
+  db_data:

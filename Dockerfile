@@ -1,17 +1,25 @@
-# Use Python image
-FROM python:3.9-slim
+# Dockerfile
 
-# Set working directory
+FROM python:3.11-slim
+
+# Set environment vars
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set workdir
 WORKDIR /app
 
-# Copy all files
-COPY . .
-
 # Install dependencies
+COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Expose the port Flask will run on
+# Copy the rest of the app
+COPY . .
+
+# Set Flask run env
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
 EXPOSE 5000
 
-# Run the Flask app
-CMD ["python", "picture_annotator.py"]
+# Start the Flask server
+CMD ["flask", "run"]
