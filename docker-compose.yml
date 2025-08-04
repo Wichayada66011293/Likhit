@@ -25,9 +25,9 @@ services:
       MYSQL_USER: likhit
       MYSQL_PASSWORD: likhit123
     ports:
-      - "3306:3306"
+      - "3307:3306"  # avoid port conflict
     volumes:
       - db_data:/var/lib/mysql
 
 volumes:
-  db_data:
+  db_data: {}
