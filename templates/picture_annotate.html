@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Likhit.Annotation</title>
+</head>
+<body>
+    <h1>โปรดระบุบว่าในภาพคืออะไร?</h1>
+
+    {% if image %}
+        <img src="/images/{{ image }}" style="max-width:500px;"><br><br>
+        <form action="/save" method="post">
+            <label>ระบุบภาพ:</label>
+            <input type="text" name="label" required>
+            <button type="submit">ยืนยันคำตอบ</button>
+        </form>
+        <p>File: {{ image }}</p>
+    {% else %}
+        <h2>All images annotated! 🎉</h2>
+    {% endif %}
+
+</body>
+</html>
+
